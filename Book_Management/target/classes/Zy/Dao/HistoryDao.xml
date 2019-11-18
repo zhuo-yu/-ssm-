@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Zy.Dao.HistoryDao">
+    <!--管理员查看正在借阅的所有信息-->
+    <select id="SelectBorrow" resultType="BookHistory">
+        select *from history where status = '1';
+    </select>
+    <!--执行还书操作,更改status-->
+    <update id="UpdataBorrow" parameterType="BookHistory">
+        update history set endtime= #{endtime} , status = '0' where hid =#{hid};
+    </update>
+    <!--查看图书归还所有信息-->
+    <select id="SelectReturn" resultType="BookHistory">
+        select *from history where status ='0';
+    </select>
+    <!--读者查看正在借阅的所有信息-->
+    <select id="ReaderSelectBorrow" resultType="BookHistory" parameterType="Integer">
+        select *from history where status ='1' and aid = #{aid};
+    </select>
+    <!--根据hid获取BookHistory对象-->
+    <select id="GetAdminbyhid" resultType="BookHistory" parameterType="Integer">
+        select *from history where hid =#{hid};
+    </select>
+    <!--借阅图书-->
+    <insert id="BorrowBook" parameterType="BookHistory">
+        insert into history values(default,#{aid},#{bid},#{card},#{bookname},#{adminname},#{username},#{begintime},#{endtime},#{status});
+    </insert>
+    <!--根据bid获得BookHistory对象-->
+    <select id="GetAdminbybid" resultType="BookHistory" parameterType="Integer">
+        select *from history where bid =#{bid} ;
+    </select>
+    <!--读者查询所有阅读记录-->
+    <select id="GetBorrowHistory" resultType="BookHistory" parameterType="Integer">
+        select *from history where aid =#{aid} and status='0';
+    </select>
+</mapper>

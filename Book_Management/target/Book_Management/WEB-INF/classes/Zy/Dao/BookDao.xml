@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Zy.Dao.BookDao">
+    <!--查询所有的图书信息-->
+    <select id="SelectAll" resultType="Book">
+        select *from book;
+    </select>
+    <!--查询特定的书籍-->
+    <select id="SelectBook" resultType="Book" parameterType="String">
+        select *from book where name like '%${name}%';
+    </select>
+    <!--添加图书-->
+    <insert id="AddBook" parameterType="Book">
+        insert into book values(default,#{name},#{card},#{autho},#{num},#{press},#{type});
+    </insert>
+    <!--修改图书信息-->
+    <update id="UpdateBook" parameterType="Book">
+        update book set name=#{name},card=#{card},autho=#{autho},num=#{num},press=#{press},type=#{type} where bid=#{bid};
+    </update>
+    <!--删除图书-->
+    <delete id="DeleteBook" parameterType="Integer">
+        delete from book where bid =#{bid};
+    </delete>
+    <!--借阅减书籍库存-->
+    <update id="SubBook" parameterType="Integer">
+        update book set num=num-1 where bid =#{bid};
+    </update>
+    <!--根据bid获取图书对象-->
+    <select id="GetBookBybid" parameterType="Integer" resultType="Book">
+        select *from book where bid=#{bid};
+    </select>
+</mapper>

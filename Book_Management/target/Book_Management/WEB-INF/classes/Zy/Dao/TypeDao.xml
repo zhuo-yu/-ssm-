@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Zy.Dao.TypeDao">
+    <!--查询所有的图书类型-->
+    <select id="SelectAll" resultType="BookType">
+        select *from booktype;
+    </select>
+    <!--添加图书分类-->
+    <insert id="AddBookType" parameterType="BookType">
+        insert into booktype values(default,#{name});
+    </insert>
+    <!--修改图书分类-->
+    <update id="UpdateBookType" parameterType="BookType">
+            update booktype set name=#{name} where tid=#{tid};
+    </update>
+    <!--删除图书分类-->
+    <delete id="DeleteBookType" parameterType="Integer">
+        delete from booktype where tid=#{tid};
+    </delete>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Zy.Dao.AdminDao">
+    <!--验证登录-->
+    <select id="Login" parameterType="Admin" resultType="Admin">
+        select *from admin where username= #{username} and password = #{password};
+    </select>
+    <!--用户注册-->
+    <insert id="Register" parameterType="Admin">
+        insert into admin values(default,#{username},#{name},#{password},#{email},#{phone},1,30,10);
+    </insert>
+    <!--查找所有用户信息-->
+    <select id="SelectAll" resultType="Admin" >
+        select *from admin;
+    </select>
+    <!--修改个人信息-->
+    <update id="UpdateAdmin" parameterType="Admin">
+        update admin set name= #{name},phone =#{phone},email=#{email} where aid=#{aid} ;
+    </update>
+    <!--修改用户密码-->
+    <update id="UpdatePassword" parameterType="Admin">
+        update admin set password= #{password} where aid =#{aid};
+    </update>
+    <!--修改读者信息-->
+    <update id="UpdateReader" parameterType="Admin">
+        update admin set username=#{username},name=#{name},password=#{password},email=#{email},phone=#{phone},lend_num=#{lend_num},max_num=#{max_num} where aid =#{aid}
+    </update>
+    <!--删除读者-->
+    <delete id="DeleteReader" parameterType="Integer">
+        delete from admin where aid =#{aid};
+    </delete>
+    <!--添加新读者-->
+    <insert id="AddReader" parameterType="Admin">
+        insert into admin values(default,#{username},#{name},#{password},#{email},#{phone},1,#{lend_num},#{max_num});
+    </insert>
+</mapper>
